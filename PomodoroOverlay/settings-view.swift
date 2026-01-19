@@ -12,9 +12,9 @@ struct SettingsView: View {
         Form {
             // task type selection
             Section("Task Type") {
-                Picker("Mode", selection: $settings.taskType) {
+                Picker("", selection: $settings.taskType) {
                     ForEach(TaskType.allCases) { taskType in
-                        VStack(alignment: .leading, spacing: 4) {
+                        VStack(alignment: .leading, spacing: 5) {
                             Text(taskType.displayName)
                                 .font(.headline)
                             Text("\(taskType.workMinutes)m work / \(taskType.shortBreakMinutes)m break")
@@ -28,14 +28,14 @@ struct SettingsView: View {
                 
                 // task type details
                 if let taskType = TaskType(rawValue: settings.taskType) {
-                    VStack(alignment: .leading, spacing: 8) {
+                    VStack(alignment: .leading, spacing: 4) {
                         DetailRow(label: "Work Duration", value: "\(taskType.workMinutes) minutes")
                         DetailRow(label: "Short Break", value: "\(taskType.shortBreakMinutes) minutes")
                         DetailRow(label: "Long Break", value: "\(taskType.longBreakMinutes) minutes")
                         DetailRow(label: "Sessions Before Long", value: "\(taskType.sessionsBeforeLongBreak)")
                     }
                     .font(.caption)
-                    .padding(.vertical, 8)
+                    .padding(.vertical, 1)
                 }
             }
             
@@ -63,6 +63,7 @@ struct SettingsView: View {
         }
         .formStyle(.grouped)
         .frame(width: 400, height: 500)
+        .padding(.vertical, 1)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Done") {
