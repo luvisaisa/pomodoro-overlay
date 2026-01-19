@@ -11,7 +11,6 @@ struct PomodoroOverlayApp: App {
     @StateObject private var menuBarManager: MenuBarManager
     
     private let windowManager: WindowManager
-    private let notificationManager = NotificationManager.shared
     
     init() {
         let settings = PomodoroSettings()
@@ -26,7 +25,7 @@ struct PomodoroOverlayApp: App {
         
         // setup notification callback
         timerModel.onSessionComplete = { sessionType in
-            notificationManager.sendSessionComplete(type: sessionType)
+            NotificationManager.shared.sendSessionComplete(type: sessionType)
         }
     }
     
@@ -57,7 +56,7 @@ struct PomodoroOverlayApp: App {
         
         // request notification permission
         Task {
-            let granted = await notificationManager.requestAuthorization()
+            let granted = await NotificationManager.shared.requestAuthorization()
             if !granted {
                 print("notification permission denied")
             }

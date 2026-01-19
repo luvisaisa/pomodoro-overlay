@@ -12,9 +12,9 @@ struct ControlButtonsView: View {
             // primary action button (start/pause)
             Button(action: primaryAction) {
                 Image(systemName: primaryIcon)
-                    .font(.title2)
-                    .frame(width: 44, height: 44)
+                    .font(.system(size: 14))
             }
+            .frame(width: 28, height: 28)
             .buttonStyle(.borderedProminent)
             .tint(primaryTint)
             .help(primaryTooltip)
@@ -23,9 +23,9 @@ struct ControlButtonsView: View {
             if timerModel.currentState != .idle {
                 Button(action: { timerModel.stop() }) {
                     Image(systemName: "stop.fill")
-                        .font(.title2)
-                        .frame(width: 44, height: 44)
+                        .font(.system(size: 14))
                 }
+                .frame(width: 28, height: 28)
                 .buttonStyle(.bordered)
                 .help("Stop and reset to idle")
             }
@@ -43,9 +43,9 @@ struct ControlButtonsView: View {
                 }
             } label: {
                 Image(systemName: "arrow.clockwise")
-                    .font(.title2)
-                    .frame(width: 44, height: 44)
+                    .font(.system(size: 14))
             }
+            .frame(width: 28, height: 28)
             .buttonStyle(.bordered)
             .help("Reset options")
         }

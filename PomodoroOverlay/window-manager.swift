@@ -36,15 +36,26 @@ class WindowManager {
         window.titlebarAppearsTransparent = true
         
         // sizing constraints
-        window.minSize = CGSize(width: 200, height: 200)
-        window.maxSize = CGSize(width: 600, height: 600)
+        window.minSize = CGSize(width: 350, height: 92)
+        window.maxSize = CGSize(width: 800, height: 800)
         
         // restore position if saved
         if let frame = restoreWindowFrame() {
             window.setFrame(frame, display: true)
         } else {
-            // center on main screen
-            window.center()
+            // set initial size and center on main screen
+            let initialSize = CGSize(width: 420, height: 470)
+            if let screen = NSScreen.main {
+                let screenFrame = screen.visibleFrame
+                let origin = CGPoint(
+                    x: screenFrame.midX - initialSize.width / 2,
+                    y: screenFrame.midY - initialSize.height / 2
+                )
+                window.setFrame(CGRect(origin: origin, size: initialSize), display: true)
+            } else {
+                window.setContentSize(initialSize)
+                window.center()
+            }
         }
         
         // observe position changes
