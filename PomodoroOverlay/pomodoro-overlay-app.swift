@@ -11,6 +11,7 @@ struct PomodoroOverlayApp: App {
     @StateObject private var menuBarManager: MenuBarManager
     
     private let windowManager: WindowManager
+    private var touchBarManager: TouchBarManager?
     
     init() {
         let settings = PomodoroSettings()
@@ -23,9 +24,9 @@ struct PomodoroOverlayApp: App {
         _menuBarManager = StateObject(wrappedValue: menuBarManager)
         self.windowManager = windowManager
         
-        // setup notification callback
-        timerModel.onSessionComplete = { sessionType in
-            NotificationManager.shared.sendSessionComplete(type: sessionType)
+        // setup touch bar manager
+        if #available(macOS 10.12.2, *) {
+            self.touchBarManager = TouchBarManager(timerModel: timerModel, settings: settings)
         }
     }
     
@@ -49,17 +50,14 @@ struct PomodoroOverlayApp: App {
         // configure overlay window
         if let window = NSApp.windows.first {
             windowManager.configureOverlayWindow(window)
+            
+            // setup touch bar
+            if #available(macOS 10.12.2, *), let touchBarManager = touchBarManager {
+                window.touchBar = touchBarManager.makeTouchBar()
+            }
         }
         
         // setup menu bar
         menuBarManager.setup()
-        
-        // request notification permission
-        Task {
-            let granted = await NotificationManager.shared.requestAuthorization()
-            if !granted {
-                print("notification permission denied")
-            }
-        }
     }
 }
