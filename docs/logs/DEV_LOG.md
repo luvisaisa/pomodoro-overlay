@@ -215,4 +215,90 @@ Create Xcode project and integrate all Swift source files
 
 ---
 
+### Xcode Project Setup Prepared
+**Step**: 07-implementation (Unit 4)  
+**Status**: Ready for Xcode project creation
+
+**Actions**:
+- Created Xcode setup guide in docs/setup/XCODE_SETUP.md
+- Created Info.plist template with notification permissions
+- Updated .gitignore for Xcode artifacts
+- Organized docs into subdirectories (planning/, design/, logs/, setup/)
+
+**Files Created**:
+- `docs/setup/XCODE_SETUP.md` - Step-by-step Xcode configuration
+- `Info.plist` - App configuration template
+- Updated `.gitignore` - Xcode build artifacts
+
+**Setup Guide Includes**:
+- New project creation steps
+- Source file integration instructions
+- Build settings configuration
+- Info.plist keys for notifications
+- Verification checklist
+- Common issues and fixes
+
+**Next Manual Steps** (requires Xcode):
+1. Open Xcode and create new macOS App project
+2. Name: "PomodoroOverlay", Bundle ID: "com.pomodoro.overlay"
+3. Add all 10 Swift files from PomodoroOverlay/ directory
+4. Configure deployment target: macOS 13.0
+5. Build (⌘B) and verify no errors
+6. Run (⌘R) to test floating window behavior
+
+---
+
+## 2026-01-18
+
+### VS Code Development Setup Complete
+**Step**: 08-vscode-build  
+**Commit**: `build: vscode workflow with app bundle build script`
+
+**Decision**: Skip Xcode, use VS Code + Swift Package Manager exclusively
+
+**Actions**:
+- Created `Resources/Info.plist` with bundle identifier and notification permissions
+- Created `build-app.sh` script for automated app bundle generation
+- Successfully built release binary with `swift build -c release`
+- Created proper `.app` bundle structure with Info.plist
+- Tested app launch — floating window and notifications working
+
+**Files Created**:
+- `Resources/Info.plist` - App configuration with bundle ID `com.pomodoro.overlay`
+- `build-app.sh` - Automated build script for creating `.app` bundle
+
+**Build Workflow**:
+```bash
+# Development (quick iteration)
+swift build          # compile
+swift run            # ❌ crashes (needs proper bundle)
+
+# Production (proper app bundle)
+./build-app.sh       # builds .app with Info.plist
+open PomodoroOverlay.app  # ✅ launches properly
+```
+
+**Key Fix**:
+- `UNUserNotificationCenter` requires proper app bundle with `CFBundleIdentifier`
+- Direct `swift run` crashes because it's a bare executable without bundle metadata
+- Solution: Build full `.app` bundle with Info.plist embedded
+
+**App Bundle Structure**:
+```
+PomodoroOverlay.app/
+├── Contents/
+    ├── MacOS/
+    │   └── PomodoroOverlay (binary)
+    └── Info.plist
+```
+
+**Next Steps**:
+- Unit 5: Testing (create Tests/ directory, write unit tests)
+- Unit 9: Documentation (update README with build instructions)
+- Test all timer flows and edge cases
+- Verify menu bar integration
+- Test notification delivery and permissions
+
+---
+
 *Log entries oldest to newest.*

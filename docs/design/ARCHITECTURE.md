@@ -135,33 +135,38 @@ stateDiagram-v2
     
     Idle --> Working: start()
     
-    Working --> Paused: pause()
+    Working --> PausedWork: pause()
     Working --> WorkComplete: timer expires
-    Working --> Idle: stop()
+    Working --> Idle: stop() / resetPomodoro()
     
-    Paused --> Working: start() [was working]
-    Paused --> ShortBreak: start() [was on break]
-    Paused --> LongBreak: start() [was on long break]
-    Paused --> Idle: stop()
+    PausedWork --> Working: start()
+    PausedWork --> Idle: stop() / resetPomodoro()
     
     WorkComplete --> ShortBreak: start() [sessions < threshold]
     WorkComplete --> LongBreak: start() [sessions == threshold]
     WorkComplete --> Idle: resetPomodoro()
     
-    ShortBreak --> Paused: pause()
+    ShortBreak --> PausedBreak: pause()
     ShortBreak --> BreakComplete: timer expires
-    ShortBreak --> Idle: stop()
+    ShortBreak --> Idle: stop() / resetPomodoro()
     
-    LongBreak --> Paused: pause()
+    LongBreak --> PausedBreak: pause()
     LongBreak --> BreakComplete: timer expires
-    LongBreak --> Idle: stop()
+    LongBreak --> Idle: stop() / resetPomodoro()
+    
+    PausedBreak --> ShortBreak: start() [was short break]
+    PausedBreak --> LongBreak: start() [was long break]
+    PausedBreak --> Idle: stop() / resetPomodoro()
     
     BreakComplete --> Working: start()
     BreakComplete --> Idle: resetPomodoro()
     
-    note right of Idle
-        resetSession(): reset current timer to full duration
-        resetPomodoro(): return to idle, clear session count
+    note left of Idle
+        resetSession(): resets timer to full duration
+        (stays in current state)
+        
+        resetPomodoro(): returns to idle,
+        clears session count
     end note
 ```
 
