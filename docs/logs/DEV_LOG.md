@@ -301,4 +301,46 @@ PomodoroOverlay.app/
 
 ---
 
+### UI Refinements and Build System
+**Step**: 08-ui-polish  
+**Commits**: 
+- `chore: update gitignore for Swift/Xcode project` (5b23fc5)
+- `docs: update architecture and development log` (4cd6fde)
+- `refactor: improve control buttons and window management` (772d4aa)
+- `refactor(ui): improve progress ring scaling and layout` (4c458cb)
+- `feat(ui): add responsive micro mode for timer view` (bec1950)
+- `refactor(ui): reduce spacing in settings window` (c00bb6b)
+
+**Actions**:
+- Enhanced UI responsiveness with micro mode for compact display
+- Improved progress ring scaling and layout precision
+- Refined control buttons with better visual hierarchy
+- Optimized settings window spacing for cleaner appearance
+- Updated gitignore for Swift/Xcode artifacts
+- Documented architecture decisions and progress
+
+**UI Improvements**:
+- **Micro Mode**: Responsive layout that adapts to window size changes
+- **Progress Ring**: Enhanced scaling algorithm with proper aspect ratio
+- **Control Buttons**: Improved spacing, alignment, and visual consistency
+- **Settings Window**: Reduced padding for more compact form layout
+- Better font sizing and weight across all components
+
+**Files Modified**:
+- `PomodoroOverlay/timer-view.swift` - Added responsive micro mode (212+ lines)
+- `PomodoroOverlay/progress-ring-view.swift` - Improved ring scaling (96+ lines)
+- `PomodoroOverlay/control-buttons-view.swift` - Refined button layout
+- `PomodoroOverlay/settings-view.swift` - Optimized spacing
+- `PomodoroOverlay/window-manager.swift` - Enhanced window configuration
+- `.gitignore` - Added Xcode/SPM artifacts
+- `docs/design/ARCHITECTURE.md` - Updated with implementation details
+- `docs/logs/DEV_LOG.md` - Added build system progress
+
+**Next Steps**:
+- Unit 5: Testing (create Tests/ directory, write unit tests)
+- Unit 9: Documentation (update README with build instructions)
+- Continue UI polish and feature implementation
+
+---
+
 *Log entries oldest to newest.*
