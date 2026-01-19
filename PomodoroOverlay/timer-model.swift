@@ -75,9 +75,6 @@ class TimerModel: ObservableObject {
     private let settings: PomodoroSettings
     private var timerCancellable: AnyCancellable?
     
-    // callbacks
-    var onSessionComplete: ((SessionType) -> Void)?
-    
     init(settings: PomodoroSettings) {
         self.settings = settings
         self.completedSessions = settings.lastCompletedSessions
@@ -268,17 +265,14 @@ class TimerModel: ObservableObject {
             completedSessions += 1
             settings.lastCompletedSessions = completedSessions
             currentState = .workComplete
-            onSessionComplete?(.work)
             
         case .shortBreak:
             currentState = .breakComplete
-            onSessionComplete?(.shortBreak)
             
         case .longBreak:
             completedSessions = 0 // reset cycle after long break
             settings.lastCompletedSessions = 0
             currentState = .breakComplete
-            onSessionComplete?(.longBreak)
             
         default:
             break
